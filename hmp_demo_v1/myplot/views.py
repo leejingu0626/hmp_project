@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, HttpResponse, render_to_response
 import json
 
-from .models import RawData
+from .models import RawData, ColumnInfo
 import csv
 
 # Call upload.html for upload file
@@ -41,16 +41,19 @@ def data_json(request):
         column3_data = float(rawdata.column_3)
         column4_data = float(rawdata.column_4)
         column5_data = float(rawdata.column_5)
-        # print(column3_data)
         data.append({"x":index,
                      "column3":column3_data,
                      "column4":column4_data,
                      "column5":column5_data})
 
+    print("----------------------------COMPLETE!!!--------------------------------")
     return JsonResponse(data, safe=False)
 
-# html test code(2019. 01. 14 jglee)
-def index_html(request):
-    rawdatas = RawData.objects.all()
-    rawdata = {'rawdatas':rawdatas}
-    return render(request, 'myplot/index.html', rawdata)
+def draws(request, checkbox_id):
+    column_info = ColumnInfo.objects.get_or_create(id=checkbox_id)
+    print("-----------------------------DRAWS()------------------------------------")
+    print(checkbox_id)
+    columninfos = ColumnInfo.objects.all()
+    columninfo = {'columninfo':columninfos}
+
+    return render(request, 'myplot/index.html', columninfo)

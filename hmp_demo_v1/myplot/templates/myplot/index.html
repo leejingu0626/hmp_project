@@ -4,11 +4,10 @@
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function Graph() {
   var dataPointsA = []
   var dataPointsB = []
   var dataPointsC = []
-
   $.ajax({
     type: 'GET',
     url: "{% url 'data_json' %}",
@@ -19,46 +18,69 @@ $(document).ready(function() {
           x: field[i].x,
           y: field[i].column3
         });
-
         dataPointsB.push({
           x: field[i].x,
           y: field[i].column4
         });
-
         dataPointsC.push({
           x: field[i].x,
           y: field[i].column5
         });
       }
-
-      var chart = new CanvasJS.Chart("chartContainer", {
+      var chart1 = new CanvasJS.Chart("chartContainer1", {
         title: {
-          text: "JSON from External File"
+          text: "Column3"
         },
-
         data: [{
           type: "line",
           name: "line1",
+          color: "red",
           dataPoints: dataPointsA
-        }, {
+        }]
+      });
+      chart1.render();
+
+      var chart2 = new CanvasJS.Chart("chartContainer2", {
+        title: {
+          text: "Column4"
+        },
+        data: [{
           type: "line",
-          name: "line2",
+          name: "line1",
+          color: "blue",a
           dataPoints: dataPointsB
-        }, {
+        }]
+      });
+      chart2.render();
+
+      var chart3 = new CanvasJS.Chart("chartContainer3", {
+        title: {
+          text: "Column5"
+        },
+        data: [{
           type: "line",
-          name: "line3",
+          name: "line1",
+          color: "green",
           dataPoints: dataPointsC
         }]
       });
-
-      chart.render();
+        chart3.render();
     }
   });
 })
 </script>
-
 </head>
 <body>
-<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <form name="check" action="../index/{{checkbox.id}}/" method="post">
+        <div class="checkbox">
+            <label for="id_0"><input id="id_0" name="id_0" type="checkbox" value="column3" /> column3</label>
+            <label for="id_1"><input id="id_1" name="id_1" type="checkbox" value="column4" /> column4</label>
+            <label for="id_2"><input id="id_2" name="id_2" type="checkbox" value="column5" /> column5</label>
+            <input type="button" value="draw" onclick="Graph()"/>
+        </div>
+    </form>
+    <div id="chartContainer1" style="heightc: 180px; width: 90%;"></div>
+    <div id="chartContainer2" style="height: 180px; width: 90%;"></div>
+    <div id="chartContainer3" style="height: 180px; width: 90%;"></div>
 </body>
 </html>

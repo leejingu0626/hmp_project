@@ -10,3 +10,7 @@ class RawData(models.Model):
 
     def __unicode__(self):
         return self
+
+class ColumnInfo(models.Model):
+    id = models.AutoField(primary_key=True)
+    is_checked = models.BooleanField(default=False)
